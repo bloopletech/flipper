@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<widget version="0.4" minimumVersion="2.0">
+   <debug>off</debug>
+
+   <about-box>
+      <image>Images/about.png</image>
+   </about-box>
+
+
+   <window title="Flipper">
+      <name>mainWindow</name>
+      <width>220</width>
+      <height>120</height>
+      <visible>true</visible>
+
+      <image src="Images/background.png">
+         <name>background</name>
+         <hOffset>0</hOffset>
+         <vOffset>0</vOffset>
+         <zOrder>0</zOrder>
+      </image>
+
+
+      <image src="Images/caseup.png">
+         <name>caseup</name>
+         <hOffset>5</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            toUpperCase();
+         //-->
+         </onMouseUp>
+         <tooltip>Change case to all `UPPERCASE`</tooltip>
+      </image>
+
+      <image src="Images/casedown.png">
+         <name>casedown</name>
+         <hOffset>30</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            toLowerCase();
+         //-->
+         </onMouseUp>
+         <tooltip>Change case to all `lowercase`</tooltip>
+      </image>
+
+      <image src="Images/casechange.png">
+         <name>casechange</name>
+         <hOffset>55</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            toSentenceCase();
+         //-->
+         </onMouseUp>
+         <tooltip>Change case to `Sentence case. Example of.`</tooltip>
+      </image>
+      
+      <image src="Images/caseflip.png">
+         <name>caseflip</name>
+         <hOffset>80</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            toInverseCase();
+         //-->
+         </onMouseUp>
+         <tooltip>Invert case. ex: `Hello World` to `hELLO wORLD`.</tooltip>
+      </image>
+
+      <image src="Images/caserev.png">
+         <name>caserev</name>
+         <hOffset>105</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            toReverseText();
+         //-->
+         </onMouseUp>
+         <tooltip>Reverse text. ex: `Hello World` to `dlroW olleH`.</tooltip>
+      </image>
+
+      <image src="Images/rot13.png">
+         <name>rot13</name>
+         <hOffset>130</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <opacity>0</opacity>
+         <onMouseUp>
+         <!--
+            toRot13();
+         //-->
+         </onMouseUp>
+         <tooltip>Perform a ROT-13 operation. ex: `Hello Word` to `Uryyb Jbeq`.</tooltip>
+      </image>
+
+      <image src="Images/reformat.png">
+         <name>reformat</name>
+         <hOffset>155</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <opacity>0</opacity>
+         <onMouseUp>
+         <!--
+            toReformat();
+         //-->
+         </onMouseUp>
+         <tooltip>Reformat the text, removing `smart quotes` and joining all the lines of text together.</tooltip>
+      </image>
+
+      <text>
+         <name>wordcount</name>
+         <data>25 words</data>
+         <color>#FFFFFF</color>
+         <size>12</size>
+         <hOffset>130</hOffset>
+         <vOffset>19</vOffset>
+         <width>60</width>
+         <alignment>left</alignment>
+
+         <zOrder>0</zOrder>
+      </text>
+
+      <image src="Images/maximize.png">
+         <name>sizer</name>
+         <hOffset>195</hOffset>
+         <vOffset>5</vOffset>
+         <zOrder>0</zOrder>
+         <tracking>rectangle</tracking>
+         <onMouseUp>
+         <!--
+            if(mainWindow.height == 250) makeSmall();
+            else makeBig();
+         //-->
+         </onMouseUp>
+         <tooltip>Make this widget bigger.</tooltip>
+      </image>
+
+      <textarea>
+         <name>io</name>
+         <data>Press Ctrl-V or &#8984;-C to paste some text into this box.
+Click one of the buttons above.
+Press Ctrl-C or &#8984;-C to copy the fixed text out.</data>
+         <color>#EEEEEE</color>
+         <font>Arial Unicode MS,Bitstream CyberBit,Arial</font>
+         <size>12</size>
+         <hOffset>5</hOffset>
+         <vOffset>28</vOffset>
+         <width>210</width>
+         <height>85</height>
+         <alignment>left</alignment>
+         <spellcheck>true</spellcheck>
+
+         <onMouseUp>
+         <!--
+            getWordCount();
+         //-->
+         </onMouseUp>
+         <onKeyUp>
+         <!--
+            getWordCount();
+         //-->
+         </onKeyUp>
+
+         <onGainFocus>
+         <!--
+            focusTimer.ticking = true;
+         //-->
+         </onGainFocus>
+         <onDragDrop>
+         <!--
+            dropped();
+         //-->
+         </onDragDrop>
+
+         <zOrder>0</zOrder>
+      </textarea>
+   </window>
+   
+   <timer>
+      <name>focusTimer</name>
+      <interval>0.05</interval>
+      <onTimerFired>
+      <!--
+      focused();
+      focusTimer.ticking = false;
+      //-->
+      </onTimerFired>
+   </timer>
+
+   <action trigger="onLoad">
+   <!--
+   function toUpperCase()
+   {
+      io.data = io.data.toUpperCase();
+
+      focusTimer.ticking = true;
+   }
+
+   function toLowerCase()
+   {
+      io.data = io.data.toLowerCase();
+
+      focusTimer.ticking = true;
+   }
+
+   function toInverseCase()
+   {
+      temp = io.data;
+      output = "";
+      for(i = 0; i < temp.length; i++)
+      {
+         switch(temp.charAt(i))
+         {
+            case 'a': output += "A"; break;
+            case 'b': output += "B"; break;
+            case 'c': output += "C"; break;
+            case 'd': output += "D"; break;
+            case 'e': output += "E"; break;
+            case 'f': output += "F"; break;
+            case 'g': output += "G"; break;
+            case 'h': output += "H"; break;
+            case 'i': output += "I"; break;
+            case 'j': output += "J"; break;
+            case 'k': output += "K"; break;
+            case 'l': output += "L"; break;
+            case 'm': output += "M"; break;
+            case 'n': output += "N"; break;
+            case 'o': output += "O"; break;
+            case 'p': output += "P"; break;
+            case 'q': output += "Q"; break;
+            case 'r': output += "R"; break;
+            case 's': output += "S"; break;
+            case 't': output += "T"; break;
+            case 'u': output += "U"; break;
+            case 'v': output += "V"; break;
+            case 'w': output += "W"; break;
+            case 'x': output += "X"; break;
+            case 'y': output += "Y"; break;
+            case 'z': output += "Z"; break;
+            case 'A': output += "a"; break;
+            case 'B': output += "b"; break;
+            case 'C': output += "c"; break;
+            case 'D': output += "d"; break;
+            case 'E': output += "e"; break;
+            case 'F': output += "f"; break;
+            case 'G': output += "g"; break;
+            case 'H': output += "h"; break;
+            case 'I': output += "i"; break;
+            case 'J': output += "j"; break;
+            case 'K': output += "k"; break;
+            case 'L': output += "l"; break;
+            case 'M': output += "m"; break;
+            case 'N': output += "n"; break;
+            case 'O': output += "o"; break;
+            case 'P': output += "p"; break;
+            case 'Q': output += "q"; break;
+            case 'R': output += "r"; break;
+            case 'S': output += "s"; break;
+            case 'T': output += "t"; break;
+            case 'U': output += "u"; break; 
+            case 'V': output += "v"; break;
+            case 'W': output += "w"; break;
+            case 'X': output += "x"; break;
+            case 'Y': output += "y"; break;
+            case 'Z': output += "z"; break;
+            default: output += temp.charAt(i);
+         }
+      }
+
+      io.data = output;
+
+      focusTimer.ticking = true;
+   }
+
+   function toSentenceCase()
+   {
+      temp = io.data;
+      output = "";
+      lastDot = true;
+      for(i = 0; i < temp.length; i++)
+      {
+         if(lastDot && temp.charAt(i) >= 'A' && temp.charAt(i) <= 'z')
+         {
+            lastDot = false;
+            output += (temp.charAt(i) + "").toUpperCase();
+         }
+         else if(temp.charAt(i) == '.' || temp.charAt(i) == '?' || temp.charAt(i) == '!' || temp.charAt(i) == '\t')
+         {
+            lastDot = true;
+            output += temp.charAt(i);
+         }
+         else
+         {
+            output += temp.charAt(i);
+         }
+      }
+
+      io.data = output;
+
+      focusTimer.ticking = true;
+   }
+
+   function toReverseText()
+   {
+      temp = io.data;
+      output = "";
+      for(i = temp.length - 1; i >= 0; i--) output += temp.charAt(i);
+
+      io.data = output;
+
+      focusTimer.ticking = true;
+   }
+
+   function toRot13()
+   {
+      temp = io.data;
+      output = "";
+      for(i = 0; i < temp.length; i++)
+      {
+         switch(temp.charAt(i))
+         {
+            case 'a': output += "n"; break;
+            case 'b': output += "o"; break;
+            case 'c': output += "p"; break;
+            case 'd': output += "q"; break;
+            case 'e': output += "r"; break;
+            case 'f': output += "s"; break;
+            case 'g': output += "t"; break;
+            case 'h': output += "u"; break;
+            case 'i': output += "v"; break;
+            case 'j': output += "w"; break;
+            case 'k': output += "x"; break;
+            case 'l': output += "y"; break;
+            case 'm': output += "z"; break;
+            case 'n': output += "a"; break;
+            case 'o': output += "b"; break;
+            case 'p': output += "c"; break;
+            case 'q': output += "d"; break;
+            case 'r': output += "e"; break;
+            case 's': output += "f"; break;
+            case 't': output += "g"; break;
+            case 'u': output += "h"; break;
+            case 'v': output += "i"; break;
+            case 'w': output += "j"; break;
+            case 'x': output += "k"; break;
+            case 'y': output += "l"; break;
+            case 'z': output += "m"; break;
+            case 'A': output += "N"; break;
+            case 'B': output += "O"; break;
+            case 'C': output += "P"; break;
+            case 'D': output += "Q"; break;
+            case 'E': output += "R"; break;
+            case 'F': output += "S"; break;
+            case 'G': output += "T"; break;
+            case 'H': output += "U"; break;
+            case 'I': output += "V"; break;
+            case 'J': output += "W"; break;
+            case 'K': output += "X"; break;
+            case 'L': output += "Y"; break;
+            case 'M': output += "Z"; break;
+            case 'N': output += "A"; break;
+            case 'O': output += "B"; break;
+            case 'P': output += "C"; break;
+            case 'Q': output += "D"; break;
+            case 'R': output += "E"; break;
+            case 'S': output += "F"; break;
+            case 'T': output += "G"; break;
+            case 'U': output += "H"; break; 
+            case 'V': output += "I"; break;
+            case 'W': output += "J"; break;
+            case 'X': output += "K"; break;
+            case 'Y': output += "L"; break;
+            case 'Z': output += "M"; break;
+            default: output += temp.charAt(i);
+         }
+      }
+
+      io.data = output;
+
+      focusTimer.ticking = true;
+   }
+
+   function toReformat()
+   {
+      temp = io.data;
+      output = "";
+      for(i = 0; i < temp.length; i++)
+      {
+         if(temp.charAt(i) == '“' || temp.charAt(i) == '”')
+         {
+            output += "\"";
+         }
+         else if(temp.charAt(i) == '‘' || temp.charAt(i) == '’')
+         {
+            output += "'";
+         }
+         else if(temp.charAt(i) == '…')
+         {
+            output += "...";
+         }
+         else if(temp.charAt(i) == '•' || temp.charAt(i) == '·')
+         {
+            output += "* ";
+            i++;
+         }
+         else if(temp.charAt(i) != '\n')
+         {
+            output += temp.charAt(i);
+         }
+         else
+         {
+            output += " ";
+         }
+      }
+
+      output = output.replace(/\s+/gm, " ");
+
+      io.data = output;
+
+      focusTimer.ticking = true;
+   }
+
+   function getWordCount()
+   {
+      temp = io.data + " ";
+      words = 0;
+      for(i = 0; i < temp.length; i++)
+      {
+         if(((temp.charAt(i) == ' ') || (temp.charAt(i) == '\n'))
+          && (i > 0) && ((temp.charAt(i - 1) != ' ')
+           && (temp.charAt(i - 1) != '\n')))
+         {
+            words++;
+         }
+      }
+
+      if(words == 1) wordcount.data = "1 word";
+      else wordcount.data = words + " words";
+      if(mainWindow.width == 340)
+      {
+         if(io.data.length == 1) wordcount.data = wordcount.data + ", 1 char";
+         else wordcount.data = wordcount.data + ", " + io.data.length + " chars";
+      }
+   }
+
+   function focused()
+   {
+      io.focus();
+      io.select(0, -1);
+   }
+
+   function dropped()
+   {
+      var data = system.event.data;
+      if(data[0] == "string") io.data = data[1];
+   }
+
+   function makeSmall()
+   {
+      mainWindow.height = 120;
+      mainWindow.width = 220;
+      background.src = "Images/background.png";
+      io.height = 85;
+      io.width = 210;
+
+      wordcount.hOffset = 130;
+      rot13.opacity = 0;
+      reformat.opacity = 0;
+
+      wordcount.width = 60;
+      getWordCount();
+
+      sizer.src = "Images/maximize.png";
+      sizer.hOffset = mainWindow.width - 25;
+      sizer.tooltip = "Make this widget bigger.";
+   }
+
+   function makeBig()
+   {
+      mainWindow.height = 250;
+      mainWindow.width = 340;
+      background.src = "Images/background-big.png";
+      io.height = 215;
+      io.width = 330;
+
+      wordcount.hOffset = 180;
+      rot13.opacity = 255;
+      reformat.opacity = 255;
+
+      wordcount.width = 130;
+      getWordCount();
+
+      sizer.src = "Images/minimize.png";
+      sizer.hOffset = mainWindow.width - 25;
+      sizer.tooltip = "Make this widget smaller.";
+   }
+   //-->
+   </action>
+</widget>
